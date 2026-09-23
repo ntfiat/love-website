@@ -68,15 +68,19 @@ export class EscapingNoController {
     audio.playCatSound();
     this.escapeCount++;
 
+    // Reset transform to measure base untransformed position accurately
+    this.btnNo.style.transform = 'none';
+    const baseBtnRect = this.btnNo.getBoundingClientRect();
     const arenaRect = this.arena.getBoundingClientRect();
-    const btnRect = this.btnNo.getBoundingClientRect();
 
-    // Random safe offsets within arena bounds
-    const maxX = arenaRect.width / 2 - btnRect.width / 2;
-    const maxY = 45;
+    // Calculate strict containment bounds within the arena (with 8px padding)
+    const minX = (arenaRect.left + 8) - baseBtnRect.left;
+    const maxX = (arenaRect.right - 8) - baseBtnRect.right;
+    const minY = Math.max(-40, (arenaRect.top + 8) - baseBtnRect.top);
+    const maxY = Math.min(40, (arenaRect.bottom - 8) - baseBtnRect.bottom);
 
-    const randomX = (Math.random() * 2 - 1) * maxX;
-    const randomY = (Math.random() * 2 - 1) * maxY;
+    const randomX = minX < maxX ? minX + Math.random() * (maxX - minX) : (Math.random() - 0.5) * 30;
+    const randomY = minY < maxY ? minY + Math.random() * (maxY - minY) : (Math.random() - 0.5) * 20;
 
     this.btnNo.style.position = 'relative';
     this.btnNo.style.transform = `translate(${randomX}px, ${randomY}px)`;

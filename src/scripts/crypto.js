@@ -4,7 +4,25 @@
  * Works synchronously in all browser environments (HTTP, HTTPS, localhost, mobile).
  */
 
-const SECRET_KEY = "MoonlitBedroomStorybook_SecretKey_2026_♡";
+const DEFAULT_KEY = "MoonlitBedroomStorybook_SecretKey_2026_♡";
+
+/**
+ * Get secret encryption key and optional salt from environment variables (.env)
+ */
+export function getSecretKey() {
+  let key = DEFAULT_KEY;
+  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SECRET_KEY) {
+    key = import.meta.env.VITE_SECRET_KEY;
+  } else if (typeof process !== 'undefined' && process.env && process.env.VITE_SECRET_KEY) {
+    key = process.env.VITE_SECRET_KEY;
+  }
+
+  const extraSalt = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SALT_KEY)
+    || (typeof process !== 'undefined' && process.env && process.env.VITE_SALT_KEY)
+    || '';
+
+  return key + (extraSalt ? `_${extraSalt}` : '');
+}
 
 /**
  * Simple 32-bit FNV-1a hash for integrity checksum
@@ -114,7 +132,7 @@ export function encryptNames(boy, girl) {
     const checksum = fnv1a(rawPayload);
     const fullPayload = checksum + rawPayload;
     const payloadBytes = strToBytes(fullPayload);
-    const keyBytes = strToBytes(SECRET_KEY);
+    const keyBytes = strToBytes(getSecretKey());
 
     // Random salt (1 byte, 1-254) to ensure different tokens each generation
     const salt = Math.floor(Math.random() * 254) + 1;
@@ -155,7 +173,7 @@ export function decryptNames(token) {
     if (!cipherBytes || cipherBytes.length < 10) return null;
 
     const salt = cipherBytes[0];
-    const keyBytes = strToBytes(SECRET_KEY);
+    const keyBytes = strToBytes(getSecretKey());
     const decryptedBytes = [];
 
     for (let i = 1; i < cipherBytes.length; i++) {
