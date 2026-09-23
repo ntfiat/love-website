@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Can I write your name on my heart? ♡</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
+  <link rel="stylesheet" href="src/styles/theme.css">
+  <link rel="stylesheet" href="src/styles/sections.css">
+</head>
+<body>
+
+  <!-- Floating Lofi Audio Player -->
+  <aside class="lofi-player" title="Click to play/pause cozy lofi soundtrack" role="button" tabindex="0">
+    <div class="lofi-btn">♪</div>
+    <div class="lofi-info">
+      <div class="lofi-title">Cozy Lofi Chimes ♡</div>
+      <div class="lofi-bars">
+        <div class="lofi-bar"></div>
+        <div class="lofi-bar"></div>
+        <div class="lofi-bar"></div>
+        <div class="lofi-bar"></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Story Chapter Navigation Bookmark -->
+  <nav class="story-nav" aria-label="Story Chapters">
+    <a href="#hero" class="story-nav-item active" aria-label="Room">
+      🕯️<span class="story-nav-tooltip">Cozy Room</span>
+    </a>
+    <a href="#before-i-ask" class="story-nav-item" aria-label="Bookshelf">
+      📚<span class="story-nav-tooltip">Before I Ask</span>
+    </a>
+    <a href="#the-letter" class="story-nav-item" aria-label="Letter">
+      💌<span class="story-nav-tooltip">The Letter</span>
+    </a>
+    <a href="#night-sky" class="story-nav-item" aria-label="Night Sky">
+      🌙<span class="story-nav-tooltip">Night Sky</span>
+    </a>
+    <a href="#the-heart" class="story-nav-item" aria-label="The Heart">
+      ❤️<span class="story-nav-tooltip">The Heart</span>
+    </a>
+    <a href="#final-question" class="story-nav-item" aria-label="Question">
+      💍<span class="story-nav-tooltip">The Question</span>
+    </a>
+  </nav>
+
+  <!-- ==========================================================================
+       CHAPTER 1: 🕯️ HERO ROOM (LAYERED PARALLAX & MASCOT)
+       ========================================================================== -->
+  <section id="hero" class="hero-section">
+    <div class="hero-scene">
+      <!-- Layer 1: Master Artwork Background with Interactive Kitten Eyes -->
+      <div class="hero-bg-layer" style="background-image: url('assets/hero-room.png');">
+        <!-- Interactive Cat Mascot Overlay -->
+        <div class="cat-mascot-zone" title="Click me! 🐾">
+          <div class="cat-speech-bubble">Can I write your name on my heart? 🐾</div>
+          <div class="cat-eyes-container">
+            <div class="cat-eye left" id="cat-eye-left">
+              <div class="cat-eyelid"></div>
+              <div class="cat-pupil">
+                <div class="cat-glint-main"></div>
+                <div class="cat-glint-sub"></div>
+                <div class="cat-glint-micro"></div>
+              </div>
+            </div>
+            <div class="cat-eye right" id="cat-eye-right">
+              <div class="cat-eyelid"></div>
+              <div class="cat-pupil">
+                <div class="cat-glint-main"></div>
+                <div class="cat-glint-sub"></div>
+                <div class="cat-glint-micro"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Blushing Cheeks -->
+          <div class="cat-blush left"></div>
+          <div class="cat-blush right"></div>
+        </div>
+      </div>
+
+      <!-- Warm Candlelight Vignette -->
+      <div class="hero-vignette"></div>
+
+      <!-- Layer 2: Window Moon Halo -->
+      <div class="hero-moon-glow"></div>
+
+      <!-- Layer 3: Micro-Flickering Fairy Lights -->
+      <div class="fairy-lights-container">
+        <div class="fairy-light"></div>
+        <div class="fairy-light"></div>
+        <div class="fairy-light"></div>
+        <div class="fairy-light"></div>
+        <div class="fairy-light"></div>
+        <div class="fairy-light"></div>
+        <div class="fairy-light"></div>
+        <div class="fairy-light"></div>
+      </div>
+
+      <!-- Layer 4: Swaying Ivy Vines -->
+      <svg class="ivy-overlay-left" viewBox="0 0 100 200" fill="none">
+        <path d="M10,0 Q30,50 15,100 T20,200" stroke="#3e4d28" stroke-width="2" opacity="0.6"/>
+        <circle cx="28" cy="45" r="7" fill="#4d5f30" opacity="0.7"/>
+        <circle cx="12" cy="75" r="9" fill="#5c733a" opacity="0.75"/>
+        <circle cx="22" cy="120" r="8" fill="#4d5f30" opacity="0.7"/>
+        <circle cx="16" cy="165" r="9" fill="#3e4d28" opacity="0.65"/>
+      </svg>
+      <svg class="ivy-overlay-right" viewBox="0 0 100 200" fill="none">
+        <path d="M90,0 Q70,50 85,100 T80,200" stroke="#3e4d28" stroke-width="2" opacity="0.6"/>
+        <circle cx="72" cy="45" r="8" fill="#5c733a" opacity="0.7"/>
+        <circle cx="88" cy="85" r="7" fill="#4d5f30" opacity="0.75"/>
+        <circle cx="78" cy="135" r="9" fill="#5c733a" opacity="0.7"/>
+      </svg>
+
+      <!-- Layer 7: Handcrafted Wooden Signboard (Commented out per feedback)
+      <div class="wooden-sign-wrapper">
+        <div class="wooden-sign">
+          <div class="sign-title">Can I write<br>your name<br>on my heart?</div>
+          <div class="sign-heart-pulse">♡</div>
+        </div>
+      </div>
+      -->
+
+      <!-- Hero Scroll Indicator -->
+      <a href="#before-i-ask" class="hero-scroll-indicator" style="text-decoration: none;">
+        <div class="scroll-mouse-icon">
+          <div class="scroll-wheel"></div>
+        </div>
+        <span>Scroll to explore our story ↓</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       CHAPTER 2: 🌷 BEFORE I ASK... (INTERACTIVE BOOKSHELF)
+       ========================================================================== -->
+  <section id="before-i-ask" class="story-chapter">
+    <div class="container">
+      <div class="chapter-header">
+        <span class="chapter-tag">🌷 Chapter 1: The Keepsakes</span>
+        <h2 class="chapter-title">Before I ask you something...</h2>
+        <p class="chapter-subtitle">Siddharth's little library of reasons why Khushi is so special. Click any book to read inside 📖</p>
+      </div>
+
+      <div class="bookshelf-display">
+        <!-- Cozy Shelf Lamp & Mascot -->
+        <div class="shelf-lamp" title="Warm night lamp">💡</div>
+        <div class="shelf-mascot-cat" title="Meow! Click me!">🐱</div>
+
+        <!-- Books Row -->
+        <div class="books-row">
+          <!-- Stack 1: From the photo -->
+          <div class="storybook-item book-good-people" data-book-id="good-people">
+            <div class="book-spine">
+              <span class="book-spine-icon">✦</span>
+              <span class="book-spine-title">Good People</span>
+              <span class="book-spine-icon">♡</span>
+            </div>
+          </div>
+
+          <div class="storybook-item book-softer-days" data-book-id="softer-days">
+            <div class="book-spine">
+              <span class="book-spine-icon">🌸</span>
+              <span class="book-spine-title">Softer Days</span>
+              <span class="book-spine-icon">♡</span>
+            </div>
+          </div>
+
+          <div class="storybook-item book-brighter-you" data-book-id="brighter-you">
+            <div class="book-spine">
+              <span class="book-spine-icon">☀️</span>
+              <span class="book-spine-title">Brighter You</span>
+              <span class="book-spine-icon">♡</span>
+            </div>
+          </div>
+
+          <div class="storybook-item book-happier-us" data-book-id="happier-us">
+            <div class="book-spine">
+              <span class="book-spine-icon">✨</span>
+              <span class="book-spine-title">Happier Us</span>
+              <span class="book-spine-icon">♡</span>
+            </div>
+          </div>
+
+          <div class="storybook-item book-forever" data-book-id="forever">
+            <div class="book-spine">
+              <span class="book-spine-icon">💍</span>
+              <span class="book-spine-title">Forever ♡</span>
+              <span class="book-spine-icon">♡</span>
+            </div>
+          </div>
+
+          <!-- Stack 2: Right companion books -->
+          <div class="storybook-item book-more-love" data-book-id="more-love">
+            <div class="book-spine">
+              <span class="book-spine-icon">💌</span>
+              <span class="book-spine-title">More Love</span>
+              <span class="book-spine-icon">♡</span>
+            </div>
+          </div>
+
+          <div class="storybook-item book-more-smiles" data-book-id="more-smiles">
+            <div class="book-spine">
+              <span class="book-spine-icon">😊</span>
+              <span class="book-spine-title">More Smiles</span>
+              <span class="book-spine-icon">♡</span>
+            </div>
+          </div>
+
+          <div class="storybook-item book-more-us" data-book-id="more-us">
+            <div class="book-spine">
+              <span class="book-spine-icon">🌿</span>
+              <span class="book-spine-title">More Us</span>
+              <span class="book-spine-icon">♡</span>
+            </div>
+          </div>
+
+          <div class="storybook-item book-always-you" data-book-id="always-you">
+            <div class="book-spine">
+              <span class="book-spine-icon">🌙</span>
+              <span class="book-spine-title">Always You ♡</span>
+              <span class="book-spine-icon">♡</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="shelf-plank"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Opened Book Modal -->
+  <div class="book-modal-backdrop" role="dialog" aria-modal="true">
+    <div class="opened-book-container">
+      <div class="opened-book-ribbon"></div>
+      <button class="opened-book-close" aria-label="Close book">✕</button>
+      <h3 class="opened-book-title">Book Title</h3>
+      <p class="opened-book-quote">“Quote content...”</p>
+      <div class="opened-book-footer">— Chapter note ♡</div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       CHAPTER 3: 💌 THE LETTER (DESK BY CANDLELIGHT)
+       ========================================================================== -->
+  <section id="the-letter" class="story-chapter">
+    <div class="container">
+      <div class="chapter-header">
+        <span class="chapter-tag">💌 Chapter 2: The Heartfelt Words</span>
+        <h2 class="chapter-title">A Letter by Candlelight</h2>
+        <p class="chapter-subtitle">Written in the quiet hours when the whole world was sleeping.</p>
+      </div>
+
+      <div class="desk-letter-scene">
+        <!-- Candle Widget -->
+        <div class="desk-candle-widget">
+          <div class="candle-flame"></div>
+          <div class="candle-wax"></div>
+          <div class="candle-base"></div>
+        </div>
+
+        <!-- Desk Envelope Trigger -->
+        <div class="wax-envelope-wrapper">
+          <div class="wax-envelope" role="button" tabindex="0" title="Click to open letter in candlelit dialog ♡">
+            <div class="wax-seal">♡</div>
+            <div style="font-family: var(--font-display); font-weight: 700; color: var(--brown); font-size: 1.25rem;">
+              Open Handwritten Letter
+            </div>
+            <div style="font-family: var(--font-handwriting); font-size: 1.35rem; color: var(--rosewood); margin-top: 0.25rem;">
+              For Khushi, from Siddharth ♡
+            </div>
+            <div class="envelope-trigger-hint">
+              ✦ Click to open with 3D wax seal animation ✦
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       LETTER OPENING DIALOG MODAL (RICH 3D OPENING & MOTION)
+       ========================================================================== -->
+  <div id="letter-dialog-modal" class="letter-modal-backdrop" role="dialog" aria-modal="true" aria-label="A Letter for Khushi from Siddharth">
+    <div class="letter-modal-overlay-bg"></div>
+
+    <div class="letter-modal-container">
+      <!-- Close Button -->
+      <button class="letter-modal-close" id="letter-modal-close" aria-label="Close letter">✕</button>
+
+      <!-- 3D Letter Stage -->
+      <div class="letter-stage" id="letter-stage">
+        
+        <!-- 3D Envelope Object -->
+        <div class="envelope-3d" id="envelope-3d">
+          <!-- Back Interior with warm pattern/lining -->
+          <div class="env-back">
+            <div class="env-inner-pattern"></div>
+          </div>
+
+          <!-- The Folded Letter tucked inside -->
+          <div class="env-letter-sheet" id="env-letter-sheet">
+            <div class="letter-inner-content">
+              <div class="letter-header-decor">
+                <span class="letter-stamp-seal">💌 For Khushi, from Siddharth</span>
+                <span class="letter-date-stamp">Candlelit Hours ♡</span>
+              </div>
+
+              <!-- Top Fold -->
+              <div class="letter-fold fold-top">
+                <div class="letter-salutation">Dearest Khushi,</div>
+                <p class="letter-text-p1">
+                  Whenever I think of what brings me genuine peace, it's always you. You walked into my life and made every ordinary moment feel gentle, warm, and meaningful.
+                </p>
+              </div>
+
+              <!-- Middle Fold -->
+              <div class="letter-fold fold-middle">
+                <p class="letter-text-p2">
+                  Loving you is the easiest, sweetest thing my heart has ever known. You are my comfort on long days, my favorite smile, and the one person I want to keep choosing every single day.
+                </p>
+              </div>
+
+              <!-- Bottom Fold -->
+              <div class="letter-fold fold-bottom">
+                <p class="letter-text-p3 letter-ending-question">
+                  So right here, under the quiet candlelight... <em>can I write your name on my heart?</em>
+                </p>
+                <div class="letter-signoff">
+                  <div class="signoff-column">
+                    <span class="signoff-quote">Yours, always & forever,</span>
+                    <span class="signoff-author">Siddharth</span>
+                  </div>
+                  <span class="signoff-heart">♡</span>
+                </div>
+                <div class="letter-actions-bar">
+                  <button class="btn-keep-letter" id="btn-keep-letter">Fold & Keep Close to Heart ♡</button>
+                  <button class="btn-replay-letter" id="btn-replay-letter">Replay Opening ↺</button>
+                </div>
+              </div>
+              
+              <!-- Pressed Dried Flower Keepsake -->
+              <div class="pressed-rose-decoration" title="A dried rose for you 🌸">🌸</div>
+            </div>
+          </div>
+
+          <!-- Envelope Pocket Flaps -->
+          <div class="env-left-flap"></div>
+          <div class="env-right-flap"></div>
+          <div class="env-bottom-flap">
+            <div class="env-bottom-crease"></div>
+          </div>
+
+          <!-- Top Foldable Flap with 3D Flip -->
+          <div class="env-top-flap" id="env-top-flap">
+            <!-- Wax Seal mounted onto top flap -->
+            <div class="modal-wax-seal" id="modal-wax-seal" title="Click to break seal & open letter!">
+              <span class="seal-heart">♡</span>
+              <div class="seal-glow-ring"></div>
+            </div>
+          </div>
+
+          <!-- Ambient Candle Glow behind envelope -->
+          <div class="env-glow"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       CHAPTER 4: 🌙 NIGHT SCENE (UNDER THE MOONLIT SKY)
+       ========================================================================== -->
+  <section id="night-sky" class="night-sky-section">
+    <canvas id="night-canvas" class="night-sky-canvas"></canvas>
+
+    <div class="container">
+      <div class="night-content-wrapper">
+        <h2 class="night-title">Under the Same Moonlit Sky 🌙</h2>
+        <p style="font-family: var(--font-handwriting); font-size: 1.4rem; color: var(--honey);">
+          ✦ Click anywhere in the sky to catch a shooting star & secret whisper ✦
+        </p>
+
+        <div class="night-quote">
+          “Even when you're far away...<br>
+          <span class="night-quote-highlight">...you're still the closest person to my heart.</span>”
+        </div>
+
+        <!-- Moonlit Hill Scene with Affectionate Couple -->
+        <div class="moonlit-hill-scene">
+          <div class="moonlit-large-moon"></div>
+
+          <div class="affectionate-couple" id="affectionate-couple" title="Siddharth & Khushi ♡" tabindex="0">
+            <!-- Boy Character (Siddharth) -->
+            <div class="couple-character boy">
+              <img src="/assets/couple-boy-idle.png" alt="Siddharth" class="char-img idle-img">
+              <img src="/assets/couple-boy-hover.png" alt="Siddharth Offering Flower" class="char-img hover-img">
+              <div class="character-caption">Siddharth ♡</div>
+            </div>
+
+            <!-- Center interaction commented out per feedback to bring couple close -->
+            <!-- <div class="couple-heart-halo">♡</div> -->
+
+            <!-- Girl Character (Khushi) -->
+            <div class="couple-character girl">
+              <img src="/assets/couple-girl-idle.png" alt="Khushi" class="char-img idle-img">
+              <img src="/assets/couple-girl-hover.png" alt="Khushi Cherished" class="char-img hover-img">
+              <div class="character-caption">Khushi ♡</div>
+            </div>
+
+            <!-- Romantic Love Dialogue Toast on Hover -->
+            <div class="couple-love-dialogue">
+              <span class="dialogue-quote">“Under the same sky, holding you in my heart forever.” — Siddharth</span>
+              <span class="dialogue-hearts">♡ 🌸 ♡</span>
+            </div>
+          </div>
+
+          <div class="hill-curved-silhouette"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       CHAPTER 5: ❤️ THE HEART (THE HEARTBEAT SANCTUARY)
+       ========================================================================== -->
+  <section id="the-heart" class="the-heart-section">
+    <div class="heart-ambient-glow"></div>
+    <div class="container">
+      <div class="heart-sanctuary-card">
+        <!-- Decorative corner florets -->
+        <span class="sanctuary-corner top-left">🌸</span>
+        <span class="sanctuary-corner top-right">✨</span>
+        <span class="sanctuary-corner bottom-left">🌿</span>
+        <span class="sanctuary-corner bottom-right">🌸</span>
+
+        <!-- Chapter Header -->
+        <div class="chapter-header heart-header">
+          <span class="chapter-tag">❤️ Chapter 4: The Heartbeat</span>
+          <h2 class="chapter-title">Can You Hear That? 💓</h2>
+          <p class="chapter-subtitle">
+            Place your hand right here... this is what happens inside Siddharth's chest whenever you are near.
+          </p>
+          <div class="heart-instruction-badge">
+            <span class="pulse-hand">👉</span> Click my heart to feel it beat for you ♡
+          </div>
+        </div>
+
+        <!-- The Interactive Heart Centerpiece -->
+        <div class="heart-interactive-stage">
+          <!-- Floating whispers layer -->
+          <div class="heart-whispers-layer" aria-hidden="true"></div>
+
+          <!-- Expanding shockwaves container -->
+          <div class="heart-shockwave-container" aria-hidden="true"></div>
+
+          <!-- Cute Plump Heart Button -->
+          <div class="cute-plump-heart-btn" role="button" tabindex="0" title="Click to hear Siddharth's heartbeat for Khushi ♡" aria-label="Siddharth's Beating Heart for Khushi">
+            <!-- Floating speech bubble tooltip -->
+            <div class="heart-speech-bubble">
+              “Listen closely... it's beating only for you! 💓”
+            </div>
+
+            <!-- Heart Glow & Aura -->
+            <div class="plump-heart-aura"></div>
+
+            <!-- Illustrated 3D Plump SVG Heart -->
+            <svg class="plump-heart-svg" viewBox="0 0 200 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <!-- Rosy Crimson Gradient -->
+                <linearGradient id="heartGradient" x1="20" y1="20" x2="180" y2="180" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#ff758c" />
+                  <stop offset="45%" stop-color="#e84a6a" />
+                  <stop offset="85%" stop-color="#c93452" />
+                  <stop offset="100%" stop-color="#9e1e38" />
+                </linearGradient>
+
+                <!-- Soft Inner Shade -->
+                <radialGradient id="heartHighlightGlow" cx="42%" cy="30%" r="55%">
+                  <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55" />
+                  <stop offset="50%" stop-color="#ff9eb3" stop-opacity="0.2" />
+                  <stop offset="100%" stop-color="#c93452" stop-opacity="0" />
+                </radialGradient>
+
+                <!-- Drop Shadow Filter -->
+                <filter id="heartShadow" x="-20%" y="-15%" width="140%" height="145%">
+                  <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#a8233e" flood-opacity="0.38" />
+                </filter>
+              </defs>
+
+              <!-- Heart Base Shape with Plump Curves -->
+              <path class="heart-base-shape"
+                d="M100,165 C60,135 15,102 15,58 C15,28 38,12 66,12 C83,12 95,20 100,32 C105,20 117,12 134,12 C162,12 185,28 185,58 C185,102 140,135 100,165 Z"
+                fill="url(#heartGradient)"
+                filter="url(#heartShadow)" />
+
+              <!-- Heart Radial 3D Shading -->
+              <path
+                d="M100,165 C60,135 15,102 15,58 C15,28 38,12 66,12 C83,12 95,20 100,32 C105,20 117,12 134,12 C162,12 185,28 185,58 C185,102 140,135 100,165 Z"
+                fill="url(#heartHighlightGlow)" />
+
+              <!-- Cute Glossy Sheen Highlights -->
+              <path class="heart-sheen"
+                d="M38,32 C50,22 65,22 75,28 C82,33 80,42 72,40 C60,37 46,42 38,55 C33,63 24,58 28,48 C30,42 34,36 38,32 Z"
+                fill="#ffffff"
+                opacity="0.65" />
+              
+              <!-- Micro Twinkle Star on Right Lobe -->
+              <circle cx="148" cy="40" r="3.5" fill="#ffffff" opacity="0.85" />
+              <circle cx="160" cy="52" r="2" fill="#ffffff" opacity="0.75" />
+
+              <!-- Cute Blushing Cheeks on Heart -->
+              <ellipse class="heart-svg-blush" cx="48" cy="85" rx="14" ry="8" fill="#ffb4c2" opacity="0.6" filter="blur(2px)" />
+              <ellipse class="heart-svg-blush" cx="152" cy="85" rx="14" ry="8" fill="#ffb4c2" opacity="0.6" filter="blur(2px)" />
+            </svg>
+
+            <!-- Sweet Gold Handwritten Ribbon Draped Across -->
+            <div class="heart-ribbon-tag">
+              <span class="ribbon-sparkle">✦</span>
+              <span class="ribbon-text">Khushi ♡</span>
+              <span class="ribbon-sparkle">✦</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Love ECG & Heart Rate Monitor -->
+        <div class="heart-ecg-monitor">
+          <div class="ecg-monitor-header">
+            <div class="ecg-bpm-pill resting" id="ecg-state-pill">
+              <span class="bpm-dot" id="ecg-state-dot"></span>
+              <span class="bpm-label" id="ecg-state-label">State:</span>
+              <span class="bpm-value" id="ecg-state-val">Quiet & Faint 💤</span>
+            </div>
+
+            <div class="ecg-status-text" id="heart-status-msg">
+              His heart was quiet and incomplete... Press continuously to wake it! ♡
+            </div>
+
+            <div class="ecg-bpm-pill elevated" id="ecg-bpm-pill">
+              <span class="bpm-dot" id="ecg-bpm-dot"></span>
+              <span class="bpm-label">BPM:</span>
+              <span class="bpm-value" id="heart-bpm-val">42</span> <span class="bpm-unit">BPM</span>
+            </div>
+          </div>
+
+          <!-- Glowing ECG Rhythm Line SVG -->
+          <div class="ecg-screen" id="ecg-screen">
+            <svg class="ecg-svg" viewBox="0 0 500 60" preserveAspectRatio="none">
+              <!-- Grid line -->
+              <line x1="0" y1="30" x2="500" y2="30" stroke="rgba(217, 130, 130, 0.15)" stroke-dasharray="4 4" />
+              <!-- Baseline faint path -->
+              <path class="ecg-base-line" id="ecg-base-path"
+                d="M0,30 L100,30 L110,29 L120,31 L130,30 L220,30 L230,29 L240,31 L250,30 L350,30 L360,29 L370,31 L380,30 L500,30" />
+              <!-- Active running glowing line -->
+              <path class="ecg-running-trace straight" id="ecg-pulse-path"
+                d="M0,30 L100,30 L110,29 L120,31 L130,30 L220,30 L230,29 L240,31 L250,30 L350,30 L360,29 L370,31 L380,30 L500,30" />
+            </svg>
+          </div>
+
+          <!-- Continuous Revive Progress Meter -->
+          <div class="heart-revive-progress-box" id="heart-revive-progress-box">
+            <div class="revive-hint-text">
+              💓 Press the heart continuously to restore and stabilize his heartbeat
+            </div>
+            <div class="revive-meter-track">
+              <div class="revive-meter-fill" id="revive-meter-fill" style="width: 0%;"></div>
+            </div>
+            <div class="revive-counter-text" id="revive-counter-text">
+              Tap 0 / 4 to revive his heart ♡
+            </div>
+          </div>
+        </div>
+
+        <!-- Romantic Note & Transition CTA (Hidden until stabilized!) -->
+        <div class="heart-bottom-whisper">
+          <!-- Initial Locked Hint -->
+          <div class="heart-locked-hint" id="heart-locked-hint">
+            <span class="lock-icon">🔒</span> Press Siddharth's heart repeatedly above to heal it with your love...
+          </div>
+
+          <!-- Thank You Message Card (Revealed upon stabilization) -->
+          <div class="heart-fixed-card" id="heart-fixed-card" style="display: none;">
+            <div class="fixed-heart-badge">
+              <span class="badge-sparkle">💖</span>
+              <span>Heart Restored & Healed by Khushi</span>
+              <span class="badge-sparkle">💖</span>
+            </div>
+            <p class="fixed-heart-quote">
+              “Thank you for coming into my life and fixing my heart, Khushi.<br>
+              Before you, it was just beating... but with you, it finally found its rhythm, comfort, and reason to beat forever.”
+            </p>
+            <div class="fixed-heart-author">— Forever yours, Siddharth ♡</div>
+          </div>
+
+          <!-- Ready for Question CTA Button (Revealed upon stabilization) -->
+          <div class="ready-question-wrapper" id="ready-question-wrapper" style="display: none;">
+            <a href="#final-question" class="btn-to-question" style="text-decoration: none;">
+              <span>Ready for the question?</span>
+              <span class="cta-arrow">↓ 💍</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       CHAPTER 6: 📝 THE FINAL QUESTION & ESCAPING NO BUTTON
+       ========================================================================== -->
+  <section id="final-question" class="question-section">
+    <div class="container" style="display: flex; justify-content: center;">
+      <div class="question-card">
+        <!-- Boy Asking With Glowing Heart -->
+        <div class="question-boy-character">
+          <img src="/assets/couple-boy-asking.png" alt="Siddharth Asking With All His Heart" class="question-boy-img">
+          <div class="question-heart-glow"></div>
+        </div>
+        <h2 class="question-main-text">Can I write your name on my heart?</h2>
+
+        <div class="buttons-arena">
+          <button class="btn-yes">YES ♡</button>
+          <button class="btn-no">NO 🙈</button>
+          <div class="no-quip-toast">Oops! Too fast for you! 🐾</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       💥 GRAND FINALE: CELEBRATION MODAL & LOVE CERTIFICATE
+       ========================================================================== -->
+  <div class="celebration-overlay" role="dialog" aria-modal="true">
+    <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
+    <div class="celebration-card">
+      <!-- Cheering Boy Character Animation -->
+      <div class="celebration-cheer-character" id="cheer-character" title="Siddharth is celebrating! 🎉">
+        <img src="/assets/boy-cheer-1.png" alt="Siddharth Jumping for Joy" class="cheer-frame active" id="cheer-f1">
+        <img src="/assets/boy-cheer-2.png" alt="Siddharth Touching His Heart" class="cheer-frame" id="cheer-f2">
+        <img src="/assets/boy-cheer-3.png" alt="Siddharth Winking Happily" class="cheer-frame" id="cheer-f3">
+        <div class="cheer-celebration-aura"></div>
+      </div>
+      <div style="font-family: var(--font-handwriting); font-size: 1.8rem; color: var(--rosewood);">
+        Officially inscribed forever & always:
+      </div>
+
+      <h1 class="celebration-name-banner">❤️ KHUSHI ❤️</h1>
+
+      <p class="celebration-quote">
+        “There. It belongs in Siddharth's heart.<br>Forever and always. ♡”
+      </p>
+
+      <!-- Keepsake Love Certificate -->
+      <div class="love-certificate">
+        <div class="certificate-header">
+          <span class="cert-title">Certificate of Eternal Affection ♡</span>
+          <span class="cert-date">September 23, 2026</span>
+        </div>
+        <div class="cert-body">
+          This certifies that <strong>Khushi's</strong> name has been permanently written upon <strong>Siddharth's</strong> heart.
+          Stored in warmth, sealed with care, and held forever with infinite love.
+        </div>
+        <div class="cert-signatures">
+          <span class="cert-sig-item">With all my love,<br><strong>Siddharth ♡</strong></span>
+          <span class="cert-sig-item">Inscribed for,<br><strong>Khushi ♡</strong></span>
+        </div>
+      </div>
+
+      <div class="celebration-actions">
+        <button class="btn-cert-save">
+          <span>📸</span> Save Keepsake (Print / PDF)
+        </button>
+        <button class="btn-cert-close">
+          Keep Cherishing ♡
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="src/scripts/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+/* ==========================================================================
+   COZY STORYBOOK LOVE THEME - DESIGN SYSTEM
+   "Cozy moonlit bedroom × handmade love story × kawaii cat × warm fairy lights"
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Caveat:wght@400;500;600;700&family=Fredoka:wght@300;400;500;600;700&family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Patrick+Hand&family=Playfair+Display:ital,wght@0,500;0,600;1,400;1,600&display=swap');
+
+:root {
+  /* The Warm Storybook Palette */
+  --cream: #FFF3E4;        /* Main page background */
+  --peach: #FFE8D2;        /* Soft vanilla / light card bg */
+  --blush: #F7D5C4;        /* Warm surface / cheeks / accents */
+  --rose: #D98282;         /* Primary dusty rose */
+  --coral: #E99A91;        /* Romantic soft coral */
+  --rosewood: #A8545C;     /* Deep romantic velvet */
+  --brown: #63443D;        /* Warm cocoa brown */
+  --espresso: #3D2927;     /* Deep espresso for text (never pure black) */
+  --gold: #FFD98A;         /* Candle glow / fairy lights */
+  --honey: #EAB96F;        /* Soft amber gold */
+  --night: #18233D;        /* Midnight blue for night scene */
+  --night-deep: #0e1626;   /* Deepest midnight */
+  --plum: #46364D;         /* Night purple / dusk */
+  --berry: #C95762;        /* Heart red */
+  --wine: #7e2d37;         /* Deep heart shadow */
+
+  /* Typography */
+  --font-display: 'Fredoka', 'Baloo 2', cursive, sans-serif;
+  --font-handwriting: 'Caveat', 'Patrick Hand', cursive;
+  --font-body: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+
+  /* Shadows - Warm and soft, never harsh black */
+  --shadow-sm: 0 4px 12px rgba(99, 68, 61, 0.08);
+  --shadow-md: 0 8px 24px rgba(99, 68, 61, 0.12);
+  --shadow-lg: 0 15px 40px rgba(99, 68, 61, 0.15);
+  --shadow-warm-glow: 0 0 35px rgba(255, 217, 138, 0.45);
+  --shadow-rose-glow: 0 0 30px rgba(217, 130, 130, 0.4);
+  --shadow-heart: 0 10px 30px rgba(201, 87, 98, 0.35);
+
+  /* Borders & Radius */
+  --border-warm: 1.5px solid rgba(168, 84, 92, 0.22);
+  --border-gold: 1.5px solid rgba(234, 185, 111, 0.35);
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+  --radius-pill: 9999px;
+
+  /* Transitions */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-fast: 0.2s var(--ease-smooth);
+  --transition-normal: 0.35s var(--ease-smooth);
+  --transition-slow: 0.6s var(--ease-smooth);
+}
+
+/* ==========================================================================
+   RESET & FOUNDATIONS
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--cream);
+  color: var(--espresso);
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--cream);
+  color: var(--espresso);
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Cozy Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--blush);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--cream);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--rose);
+}
+
+/* Selection Color */
+::selection {
+  background-color: rgba(233, 154, 145, 0.3);
+  color: var(--espresso);
+}
+
+/* Subtle Cursor Trail Container */
+#cursor-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99999;
+}
+
+/* Ambient Floating Dust / Light Motes */
+#ambient-dust {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Base Headings */
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--espresso);
+  letter-spacing: -0.01em;
+}
+
+.font-handwriting {
+  font-family: var(--font-handwriting);
+  letter-spacing: 0.02em;
+}
+
+/* Buttons Base */
+button {
+  font-family: var(--font-display);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  transition: all var(--transition-normal);
+}
+
+/* Responsive Utilities */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Accessible focus ring */
+button:focus-visible, a:focus-visible {
+  outline: 3px solid var(--rose);
+  outline-offset: 3px;
+}

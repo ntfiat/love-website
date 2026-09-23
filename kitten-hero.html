@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Kitten Hero Preview ♡</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #120d18;
+      --bg-warm: #1c1424;
+      --accent-pink: #f28b82;
+      --accent-gold: #ffd166;
+      --accent-rose: #ff758f;
+      --card-bg: rgba(28, 20, 36, 0.75);
+      --border-warm: rgba(255, 209, 102, 0.2);
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Quicksand', -apple-system, sans-serif;
+      --font-hand: 'Caveat', cursive;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 50% 20%, rgba(242, 139, 130, 0.15) 0%, transparent 60%),
+        radial-gradient(circle at 20% 80%, rgba(255, 209, 102, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 117, 143, 0.1) 0%, transparent 50%);
+      color: #f7e6d4;
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 48px;
+      overflow-x: hidden;
+    }
+
+    /* Ambient Fairy Lights */
+    .fairy-glow-orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(40px);
+      z-index: 0;
+    }
+    .orb-1 { width: 320px; height: 320px; top: 5%; left: 10%; background: rgba(255, 209, 102, 0.07); }
+    .orb-2 { width: 400px; height: 400px; top: 15%; right: 10%; background: rgba(242, 139, 130, 0.09); }
+
+    /* Page Header */
+    .preview-header {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      max-width: 800px;
+      margin-bottom: 24px;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(242, 139, 130, 0.15);
+      border: 1px solid rgba(242, 139, 130, 0.35);
+      color: #ffb4a2;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 15px rgba(242, 139, 130, 0.1);
+    }
+
+    .preview-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 700;
+      color: #fff3ec;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .preview-subtitle {
+      font-size: clamp(0.95rem, 2vw, 1.15rem);
+      color: #d1b8c7;
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    /* Main Interactive Hero Box */
+    .hero-stage {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1080px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-warm);
+      border-radius: 24px;
+      padding: 16px;
+      box-shadow: 
+        0 25px 60px rgba(0, 0, 0, 0.6),
+        0 0 40px rgba(242, 139, 130, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* 16:9 Aspect Ratio Canvas Wrapper */
+    .canvas-viewport {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #0f0a14;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      cursor: crosshair;
+      user-select: none;
+      touch-action: none;
+    }
+
+    #kitten-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+
+    /* Loading Overlay */
+    .loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(18, 13, 24, 0.95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      z-index: 20;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    .loading-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .heart-loader {
+      font-size: 3rem;
+      animation: heartPulse 1.2s infinite ease-in-out;
+    }
+    @keyframes heartPulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.3); opacity: 1; filter: drop-shadow(0 0 15px rgba(242,139,130,0.8)); }
+    }
+
+    .loading-text {
+      font-family: var(--font-hand);
+      font-size: 1.6rem;
+      color: #ffccd5;
+    }
+
+    /* Interactive Speech Bubble */
+    .speech-bubble {
+      position: absolute;
+      top: 14%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-10px);
+      background: rgba(255, 250, 245, 0.95);
+      color: #3d2b27;
+      font-family: var(--font-hand);
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      pointer-events: none;
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 15;
+      white-space: nowrap;
+    }
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 8px 8px 0;
+      border-style: solid;
+      border-color: rgba(255, 250, 245, 0.95) transparent transparent;
+    }
+    .speech-bubble.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Interactive Cursor Guidance Overlay */
+    .guidance-hint {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #f7e6d4;
+      font-size: 0.85rem;
+      padding: 6px 14px;
+      border-radius: 999px;
+      pointer-events: none;
+      backdrop-filter: blur(8px);
+      opacity: 0.85;
+      transition: opacity 0.3s ease;
+      white-space: nowrap;
+      z-index: 10;
+    }
+
+    /* HUD / Live Telemetry Bar */
+    .telemetry-bar {
+      margin-top: 16px;
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 16px;
+      background: rgba(18, 13, 24, 0.5);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.85rem;
+    }
+
+    .telemetry-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .telemetry-label {
+      color: #a392a0;
+    }
+    .telemetry-value {
+      font-weight: 700;
+      color: #ffd166;
+      font-family: monospace;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    /* Interactive Controls & Pose Tester */
+    .controls-panel {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 1080px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .pose-buttons-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .pose-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #eed6c4;
+      padding: 8px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .pose-btn:hover {
+      background: rgba(242, 139, 130, 0.2);
+      border-color: var(--accent-pink);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .pose-btn.active {
+      background: linear-gradient(135deg, rgba(242,139,130,0.3), rgba(255,117,143,0.3));
+      border-color: var(--accent-pink);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(242, 139, 130, 0.25);
+    }
+
+    /* Manual Scrubber Range */
+    .scrubber-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(28, 20, 36, 0.6);
+      padding: 12px 18px;
+      border-radius: 14px;
+      border: 1px solid var(--border-warm);
+    }
+    .scrubber-slider {
+      flex: 1;
+      accent-color: var(--accent-pink);
+      cursor: pointer;
+      height: 6px;
+    }
+
+    .nav-buttons-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.25s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #f28b82, #e87a90);
+      color: #2a111a;
+      box-shadow: 0 8px 24px rgba(242, 139, 130, 0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(242, 139, 130, 0.45);
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #f7e6d4;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    /* Floating Heart on Click */
+    .click-heart {
+      position: fixed;
+      pointer-events: none;
+      z-index: 99999;
+      color: #ff85a1;
+      font-size: 24px;
+      animation: floatHeart 1.2s forwards cubic-bezier(0.2, 0.8, 0.4, 1);
+    }
+    @keyframes floatHeart {
+      0% { opacity: 1; transform: translate(-50%, -50%) scale(0.6) rotate(0deg); }
+      50% { transform: translate(-50%, calc(-50% - 60px)) scale(1.2) rotate(15deg); }
+      100% { opacity: 0; transform: translate(-50%, calc(-50% - 110px)) scale(1.5) rotate(-10deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Light Orbs -->
+  <div class="fairy-glow-orb orb-1"></div>
+  <div class="fairy-glow-orb orb-2"></div>
+
+  <!-- Header -->
+  <header class="preview-header">
+    <div class="badge-pill">🐾 Frame-Based Interactive Sprite Engine</div>
+    <h1 class="preview-title">Can I write your name on my heart? ♡</h1>
+    <p class="preview-subtitle">
+      Hover and move your mouse gently across the viewport. Watch how the kitten softly notices your cursor, follows you with curious eyes, and shyly lifts the sign when you draw near.
+    </p>
+  </header>
+
+  <!-- Main Hero Stage -->
+  <main class="hero-stage">
+    <div class="canvas-viewport" id="viewport">
+      <!-- Loading Screen -->
+      <div class="loading-overlay" id="loading-overlay">
+        <div class="heart-loader">♡</div>
+        <div class="loading-text">Waking up the kitten...</div>
+      </div>
+
+      <!-- Canvas (16:9 Composition) -->
+      <canvas id="kitten-canvas" width="1280" height="720"></canvas>
+
+      <!-- Speech Bubble -->
+      <div class="speech-bubble" id="speech-bubble">Can I write your name on my heart? 🐾</div>
+
+      <!-- Guidance Hint -->
+      <div class="guidance-hint" id="guidance-hint">
+        ✨ Move cursor to track • Top-center to lift board • Click to pet
+      </div>
+    </div>
+
+    <!-- Live Telemetry / Status -->
+    <div class="telemetry-bar">
+      <div class="telemetry-item">
+        <span class="telemetry-label">Active Pose:</span>
+        <span class="telemetry-value" id="hud-pose">Neutral (Direct Gaze)</span>
+      </div>
+      <div class="telemetry-item">
+        <span class="telemetry-label">Frame:</span>
+        <span class="telemetry-value" id="hud-frame">0.0 / 95</span>
+      </div>
+      <div class="telemetry-item">
+        <span class="telemetry-label">Board Status:</span>
+        <span class="telemetry-value" id="hud-board">Resting at Chest</span>
+      </div>
+      <div class="telemetry-item">
+        <span class="telemetry-label">Render Rate:</span>
+        <span class="telemetry-value" id="hud-fps">60 FPS</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Controls Panel -->
+  <section class="controls-panel">
+    <!-- Quick Pose Tester Buttons -->
+    <div class="pose-buttons-grid">
+      <button class="pose-btn active" data-pose="neutral">🐾 Neutral Center</button>
+      <button class="pose-btn" data-pose="left">👈 Look Left</button>
+      <button class="pose-btn" data-pose="right">👉 Look Right</button>
+      <button class="pose-btn" data-pose="raise">✨ Raise Board (Top)</button>
+      <button class="pose-btn" data-pose="upper-left">↖ Upper Left</button>
+      <button class="pose-btn" data-pose="upper-right">↗ Upper Right</button>
+      <button class="pose-btn" data-pose="lower-left">🌸 Shy Blink (Lower Left)</button>
+      <button class="pose-btn" data-pose="lower-right">↘ Lower Right</button>
+    </div>
+
+    <!-- Manual Scrubber -->
+    <div class="scrubber-row">
+      <span style="font-size: 0.85rem; color: #a392a0; white-space: nowrap;">Manual Frame Scrubber:</span>
+      <input type="range" class="scrubber-slider" id="frame-scrubber" min="0" max="95" step="0.1" value="0">
+      <span class="telemetry-value" id="scrubber-val">0.0</span>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-buttons-row">
+      <a href="index.html" class="btn-link btn-primary">
+        <span>📖</span> View Full Romantic Story Experience
+      </a>
+      <button class="btn-link btn-secondary" id="btn-purr">
+        <span>🐾</span> Pet Kitten (Purr & Heart)
+      </button>
+    </div>
+  </section>
+
+  <!-- Audio Context Synthesizer for Purr/Chimes without external dependencies -->
+  <script>
+    class MiniAudio {
+      constructor() {
+        this.ctx = null;
+      }
+      ensureContext() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+      playPurr() {
+        this.ensureContext();
+        if (!this.ctx) return;
+        const t = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(140, t);
+        osc.frequency.exponentialRampToValueAtTime(220, t + 0.15);
+        osc.frequency.exponentialRampToValueAtTime(110, t + 0.35);
+
+        gain.gain.setValueAtTime(0.01, t);
+        gain.gain.linearRampToValueAtTime(0.18, t + 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.42);
+      }
+      playChime() {
+        this.ensureContext();
+        if (!this.ctx) return;
+        const freqs = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        freqs.forEach((freq, idx) => {
+          const t = this.ctx.currentTime + idx * 0.08;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, t);
+
+          gain.gain.setValueAtTime(0.01, t);
+          gain.gain.linearRampToValueAtTime(0.12, t + 0.03);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.6);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(t);
+          osc.stop(t + 0.65);
+        });
+      }
+    }
+    const miniAudio = new MiniAudio();
+  </script>
+
+  <!-- Interactive Sprite Engine Script -->
+  <script>
+    class KittenInteractiveHero {
+      constructor() {
+        this.canvas = document.getElementById('kitten-canvas');
+        this.ctx = this.canvas.getContext('2d', { alpha: false });
+        this.viewport = document.getElementById('viewport');
+        this.loadingOverlay = document.getElementById('loading-overlay');
+        this.speechBubble = document.getElementById('speech-bubble');
+        this.hudPose = document.getElementById('hud-pose');
+        this.hudFrame = document.getElementById('hud-frame');
+        this.hudBoard = document.getElementById('hud-board');
+        this.hudFps = document.getElementById('hud-fps');
+        this.scrubber = document.getElementById('frame-scrubber');
+        this.scrubberVal = document.getElementById('scrubber-val');
+
+        // Sprite Sheet Configuration
+        // Total frames: 96, original aspect: 16:9 (640x360 per frame in JPG, total width 61,440)
+        this.totalFrames = 96;
+        this.frameWidth = 640;
+        this.frameHeight = 360;
+        this.spriteSheet = new Image();
+        this.spriteLoaded = false;
+
+        // Interaction State
+        this.isHovering = false;
+        this.manualOverride = false;
+        this.targetGazeX = 0; // -1 (left) to +1 (right)
+        this.targetGazeY = 0; // -1 (up) to +1 (down)
+        this.currentGazeX = 0;
+        this.currentGazeY = 0;
+        this.currentFrame = 0;
+
+        // Damping / Easing: Slight delay for lifelike curiosity
+        this.damping = 0.088;
+
+        // FPS Tracking
+        this.lastFrameTime = performance.now();
+        this.fpsFrameCount = 0;
+        this.fpsTimer = performance.now();
+
+        // Speech Quotes
+        this.quotes = [
+          "Can I write your name on my heart? 🐾",
+          "You're making my heart purr warmer! ♡",
+          "I'm keeping this sign safe for you ✨",
+          "Look at the sign... it's really for you 🌸",
+          "Forever and always... meow! 🤍"
+        ];
+
+        this.init();
+      }
+
+      init() {
+        // Preload Sprite Sheet
+        // High quality 640x360 JPG with automatic fallback
+        this.spriteSheet.src = 'assets/kitten_spritesheet.jpg';
+        this.spriteSheet.onload = () => {
+          this.spriteLoaded = true;
+          this.frameWidth = Math.round(this.spriteSheet.width / this.totalFrames);
+          this.frameHeight = this.spriteSheet.height;
+          this.loadingOverlay.classList.add('hidden');
+          this.render();
+        };
+        this.spriteSheet.onerror = () => {
+          // Fallback to PNG if JPG fails
+          console.warn('Falling back to PNG spritesheet...');
+          this.spriteSheet.src = 'assets/kitten_spritesheet.png';
+          this.frameWidth = 320;
+          this.frameHeight = 180;
+        };
+
+        // Event Listeners for Mouse / Touch Tracking
+        this.viewport.addEventListener('mousemove', (e) => this.onMouseMove(e));
+        this.viewport.addEventListener('mouseleave', () => this.onMouseLeave());
+        this.viewport.addEventListener('click', (e) => this.onClick(e));
+
+        // Touch Interaction
+        this.viewport.addEventListener('touchstart', (e) => {
+          if (e.touches.length > 0) this.onTouchMove(e.touches[0]);
+        }, { passive: true });
+        this.viewport.addEventListener('touchmove', (e) => {
+          if (e.touches.length > 0) this.onTouchMove(e.touches[0]);
+        }, { passive: true });
+        this.viewport.addEventListener('touchend', () => this.onMouseLeave());
+
+        // Quick Pose Buttons
+        document.querySelectorAll('.pose-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.pose-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            this.setManualPose(btn.dataset.pose);
+          });
+        });
+
+        // Manual Scrubber
+        this.scrubber.addEventListener('input', (e) => {
+          this.manualOverride = true;
+          this.currentFrame = parseFloat(e.target.value);
+          this.scrubberVal.textContent = this.currentFrame.toFixed(1);
+          document.querySelectorAll('.pose-btn').forEach(b => b.classList.remove('active'));
+        });
+
+        // Pet Kitten Button
+        const btnPurr = document.getElementById('btn-purr');
+        if (btnPurr) {
+          btnPurr.addEventListener('click', (e) => {
+            const rect = this.viewport.getBoundingClientRect();
+            this.onClick({ clientX: rect.left + rect.width / 2, clientY: rect.top + rect.height * 0.45 });
+          });
+        }
+
+        // Start 60 FPS Render Loop
+        requestAnimationFrame((t) => this.animationLoop(t));
+      }
+
+      onMouseMove(e) {
+        this.isHovering = true;
+        this.manualOverride = false;
+        const rect = this.viewport.getBoundingClientRect();
+        // Normalized coordinates: -1 (left/top) to +1 (right/bottom)
+        const relX = (e.clientX - rect.left) / rect.width;
+        const relY = (e.clientY - rect.top) / rect.height;
+        this.targetGazeX = Math.max(-1, Math.min(1, (relX - 0.5) * 2.0));
+        this.targetGazeY = Math.max(-1, Math.min(1, (relY - 0.5) * 2.0));
+      }
+
+      onTouchMove(touch) {
+        this.isHovering = true;
+        this.manualOverride = false;
+        const rect = this.viewport.getBoundingClientRect();
+        const relX = (touch.clientX - rect.left) / rect.width;
+        const relY = (touch.clientY - rect.top) / rect.height;
+        this.targetGazeX = Math.max(-1, Math.min(1, (relX - 0.5) * 2.0));
+        this.targetGazeY = Math.max(-1, Math.min(1, (relY - 0.5) * 2.0));
+      }
+
+      onMouseLeave() {
+        this.isHovering = false;
+        // When mouse leaves hero area, smoothly return to neutral first frame
+        this.targetGazeX = 0;
+        this.targetGazeY = 0;
+      }
+
+      onClick(e) {
+        miniAudio.playPurr();
+        miniAudio.playChime();
+
+        // Show cute speech bubble
+        const quote = this.quotes[Math.floor(Math.random() * this.quotes.length)];
+        this.speechBubble.textContent = quote;
+        this.speechBubble.classList.add('visible');
+        clearTimeout(this.bubbleTimer);
+        this.bubbleTimer = setTimeout(() => {
+          this.speechBubble.classList.remove('visible');
+        }, 2600);
+
+        // Spawn floating hearts
+        const x = e.clientX || window.innerWidth / 2;
+        const y = e.clientY || window.innerHeight / 2;
+        for (let i = 0; i < 6; i++) {
+          this.createHeart(x + (Math.random() * 50 - 25), y + (Math.random() * 30 - 15));
+        }
+      }
+
+      createHeart(x, y) {
+        const heart = document.createElement('div');
+        heart.className = 'click-heart';
+        heart.textContent = Math.random() > 0.4 ? '♡' : '🐾';
+        heart.style.left = `${x}px`;
+        heart.style.top = `${y}px`;
+        heart.style.color = Math.random() > 0.5 ? '#f28b82' : '#ffd166';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 1200);
+      }
+
+      setManualPose(pose) {
+        this.manualOverride = false;
+        this.isHovering = true;
+        switch(pose) {
+          case 'neutral':
+            this.targetGazeX = 0;
+            this.targetGazeY = 0;
+            break;
+          case 'left':
+            this.targetGazeX = -0.9;
+            this.targetGazeY = 0;
+            break;
+          case 'right':
+            this.targetGazeX = 0.9;
+            this.targetGazeY = 0;
+            break;
+          case 'raise':
+            this.targetGazeX = 0;
+            this.targetGazeY = -0.9;
+            break;
+          case 'upper-left':
+            this.targetGazeX = -0.7;
+            this.targetGazeY = -0.7;
+            break;
+          case 'upper-right':
+            this.targetGazeX = 0.7;
+            this.targetGazeY = -0.7;
+            break;
+          case 'lower-left':
+            this.targetGazeX = -0.6;
+            this.targetGazeY = 0.75;
+            break;
+          case 'lower-right':
+            this.targetGazeX = 0.6;
+            this.targetGazeY = 0.75;
+            break;
+        }
+      }
+
+      /**
+       * Deterministic Gaze to Frame Index Mapping
+       * Maps 2D gaze (gx, gy) to frame position
+       */
+      computeTargetFrame(gx, gy) {
+        const r = Math.hypot(gx, gy);
+
+        // 1. Center Deadzone: Neutral forward pose (Frame 0)
+        if (r < 0.12) {
+          return 0.0;
+        }
+
+        // 2. Top-Center Area: Kitten raises the board with both paws!
+        if (gy < -0.18 && Math.abs(gx) < 0.45) {
+          const t = Math.min(1.0, (-gy - 0.18) / 0.72);
+          // Interpolates from frame 36 (starting lift) to 47 (peak board lift)
+          return 36.0 + t * 11.0;
+        }
+
+        // 3. Upper-Left Attention Frames
+        if (gx < -0.18 && gy < -0.18) {
+          const t = Math.min(1.0, (r - 0.2) / 0.75);
+          return 4.0 + t * 2.0;
+        }
+
+        // 4. Upper-Right Attention Frames
+        if (gx > 0.18 && gy < -0.18) {
+          const t = Math.min(1.0, (r - 0.2) / 0.75);
+          return 24.0 + t * 5.0;
+        }
+
+        // 5. Far Left Attention Frames (Frames 0 to 8)
+        if (gx < -0.12 && Math.abs(gy) <= 0.28) {
+          const t = Math.min(1.0, (-gx - 0.12) / 0.78);
+          return 0.0 + t * 8.0;
+        }
+
+        // 6. Far Right Attention Frames (Frames 14 to 21)
+        if (gx > 0.12 && Math.abs(gy) <= 0.28) {
+          const t = Math.min(1.0, (gx - 0.12) / 0.78);
+          return 14.0 + t * 7.0;
+        }
+
+        // 7. Lower-Left Attention Frames (Shy blush squint frames 55 to 63)
+        if (gx <= 0.0 && gy > 0.2) {
+          const t = Math.min(1.0, (gy - 0.2) / 0.75);
+          return 55.0 + t * 8.0;
+        }
+
+        // 8. Lower-Right Attention Frames (Frames 70 to 78)
+        if (gx > 0.0 && gy > 0.2) {
+          const t = Math.min(1.0, (gy - 0.2) / 0.75);
+          return 70.0 + t * 8.0;
+        }
+
+        return 0.0;
+      }
+
+      animationLoop(timestamp) {
+        // Compute FPS
+        this.fpsFrameCount++;
+        if (timestamp - this.fpsTimer >= 500) {
+          const fps = Math.round((this.fpsFrameCount * 1000) / (timestamp - this.fpsTimer));
+          this.hudFps.textContent = `${fps} FPS`;
+          this.fpsFrameCount = 0;
+          this.fpsTimer = timestamp;
+        }
+
+        if (!this.manualOverride) {
+          // Eased Interpolation with Lifelike Lag Delay
+          this.currentGazeX += (this.targetGazeX - this.currentGazeX) * this.damping;
+          this.currentGazeY += (this.targetGazeY - this.currentGazeY) * this.damping;
+
+          // Compute target frame
+          const targetFrame = this.computeTargetFrame(this.currentGazeX, this.currentGazeY);
+
+          // Smoothly interpolate currentFrame toward targetFrame
+          this.currentFrame += (targetFrame - this.currentFrame) * 0.12;
+
+          // Update Scrubber UI
+          this.scrubber.value = this.currentFrame.toFixed(1);
+          this.scrubberVal.textContent = this.currentFrame.toFixed(1);
+        }
+
+        this.render();
+        this.updateHUD();
+
+        requestAnimationFrame((t) => this.animationLoop(t));
+      }
+
+      /**
+       * Sub-frame Cross-Fade Canvas Render
+       * Draws floorFrame and blends ceilFrame for 60 FPS silky smooth continuity
+       */
+      render() {
+        if (!this.spriteLoaded) return;
+
+        const cw = this.canvas.width;
+        const ch = this.canvas.height;
+        const fw = this.frameWidth;
+        const fh = this.frameHeight;
+
+        // Ensure bounds
+        const frameIndex = Math.max(0, Math.min(this.totalFrames - 1, this.currentFrame));
+        const f0 = Math.floor(frameIndex);
+        const f1 = Math.min(this.totalFrames - 1, Math.ceil(frameIndex));
+        const alpha = frameIndex - f0;
+
+        // Clear canvas
+        this.ctx.clearRect(0, 0, cw, ch);
+
+        // Draw Base Frame
+        this.ctx.globalAlpha = 1.0;
+        this.ctx.drawImage(
+          this.spriteSheet,
+          f0 * fw, 0, fw, fh,
+          0, 0, cw, ch
+        );
+
+        // Draw Fractional Blended Frame if between frames
+        if (alpha > 0.01 && f0 !== f1) {
+          this.ctx.globalAlpha = alpha;
+          this.ctx.drawImage(
+            this.spriteSheet,
+            f1 * fw, 0, fw, fh,
+            0, 0, cw, ch
+          );
+          this.ctx.globalAlpha = 1.0;
+        }
+      }
+
+      updateHUD() {
+        const f = this.currentFrame;
+        this.hudFrame.textContent = `${f.toFixed(1)} / ${this.totalFrames - 1}`;
+
+        let pose = 'Neutral Forward';
+        let board = 'Resting at Chest';
+
+        if (f >= 36 && f <= 52) {
+          pose = 'Looking Up & Board Lifted';
+          board = f >= 43 ? 'Raised High with Both Paws ✨' : 'Lifting Upward...';
+        } else if (f >= 5 && f <= 12) {
+          pose = 'Looking Left';
+        } else if (f >= 16 && f <= 24) {
+          pose = 'Looking Right';
+        } else if (f >= 25 && f <= 33) {
+          pose = 'Looking Upper-Right';
+        } else if (f >= 55 && f <= 65) {
+          pose = 'Shy Squint / Blushing Smile 🌸';
+        } else if (f >= 68 && f <= 80) {
+          pose = 'Looking Lower-Right';
+        } else if (f < 3 || f > 90) {
+          pose = 'Neutral Direct Eye Contact ♡';
+        }
+
+        this.hudPose.textContent = pose;
+        this.hudBoard.textContent = board;
+      }
+    }
+
+    // Initialize on DOM Ready
+    document.addEventListener('DOMContentLoaded', () => {
+      window.kittenHero = new KittenInteractiveHero();
+    });
+  </script>
+</body>
+</html>

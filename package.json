@@ -1,0 +1,18 @@
+{
+  "name": "cozy-storybook-love-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A warm, candlelit, storybook romantic web experience - Can I write your name on my heart?",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "agentation": "^3.1.2",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "vite": "^5.4.2"
+  }
+}
