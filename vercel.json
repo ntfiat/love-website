@@ -3,22 +3,23 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "cleanUrls": true,
-  "rewrites": [
+  "trailingSlash": false,
+  "routes": [
     {
-      "source": "/gen2",
-      "destination": "/gen2.html"
+      "src": "/gen2",
+      "dest": "/gen2.html"
     },
     {
-      "source": "/kitten-hero",
-      "destination": "/kitten-hero.html"
+      "src": "/kitten-hero",
+      "dest": "/kitten-hero.html"
     },
     {
-      "source": "/server/(.*)",
-      "destination": "/index.html"
+      "src": "/server(?:/.*)?",
+      "dest": "/index.html"
     },
     {
-      "source": "/server",
-      "destination": "/index.html"
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }
