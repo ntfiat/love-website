@@ -1,25 +1,8 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "routes": [
-    {
-      "src": "/gen2",
-      "dest": "/gen2.html"
-    },
-    {
-      "src": "/kitten-hero",
-      "dest": "/kitten-hero.html"
-    },
-    {
-      "src": "/server(?:/.*)?",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
+  "rewrites": [
+    { "source": "/gen2",         "destination": "/gen2.html" },
+    { "source": "/gen2/(.*)",    "destination": "/gen2.html" },
+    { "source": "/kitten-hero",  "destination": "/kitten-hero.html" },
+    { "source": "/server/:path*","destination": "/index.html" }
   ]
 }
