@@ -1,0 +1,26 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/gen2",
+      "destination": "/gen2.html"
+    },
+    {
+      "source": "/gen2/",
+      "destination": "/gen2.html"
+    },
+    {
+      "source": "/server/:match*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/server",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/kitten-hero",
+      "destination": "/kitten-hero.html"
+    }
+  ]
+}
