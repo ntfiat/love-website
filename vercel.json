@@ -1,5 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "cleanUrls": true,
   "rewrites": [
     {
@@ -7,20 +9,16 @@
       "destination": "/gen2.html"
     },
     {
-      "source": "/gen2/",
-      "destination": "/gen2.html"
+      "source": "/kitten-hero",
+      "destination": "/kitten-hero.html"
     },
     {
-      "source": "/server/:match*",
+      "source": "/server/(.*)",
       "destination": "/index.html"
     },
     {
       "source": "/server",
       "destination": "/index.html"
-    },
-    {
-      "source": "/kitten-hero",
-      "destination": "/kitten-hero.html"
     }
   ]
 }
