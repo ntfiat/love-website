@@ -1,6 +1,6 @@
 /**
  * Grand Finale Celebration Controller
- * Full-screen heart confetti burst, radiant calligraphy reveal for KHUSHI, and keepsake certificate
+ * Full-screen heart confetti burst, radiant calligraphy reveal for the beloved's name, and keepsake certificate
  */
 
 import { audio } from './audio.js';

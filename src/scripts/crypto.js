@@ -5,6 +5,8 @@
  */
 
 const DEFAULT_KEY = "MoonlitBedroomStorybook_SecretKey_2026_♡";
+const DEFAULT_BOY = 'Siddharth';
+const DEFAULT_GIRL = 'Khushi';
 
 /**
  * Get secret encryption key and optional salt from environment variables (.env)
@@ -195,8 +197,8 @@ export function decryptNames(token) {
     const data = JSON.parse(rawPayload);
     if (data && typeof data === 'object' && (data.b || data.g)) {
       return {
-        boy: data.b || 'Siddharth',
-        girl: data.g || 'Khushi'
+        boy: data.b || DEFAULT_BOY,
+        girl: data.g || DEFAULT_GIRL
       };
     }
   } catch (err) {

@@ -8,7 +8,7 @@
  */
 
 import { audio } from './audio.js';
-import { onNamesChange } from './names.js';
+import { onNamesChange, DEFAULT_BOY, DEFAULT_GIRL } from './names.js';
 
 export class HeartbeatController {
   constructor() {
@@ -49,8 +49,8 @@ export class HeartbeatController {
       stable: 'M0,30 L50,30 L65,30 L75,22 L85,38 L95,8 L108,52 L120,22 L130,30 L180,30 L195,30 L205,22 L215,38 L225,8 L238,52 L250,22 L260,30 L310,30 L325,30 L335,22 L345,38 L355,8 L368,52 L380,22 L390,30 L440,30 L455,30 L465,22 L475,38 L485,8 L498,52 L500,30'
     };
 
-    this.boy = 'Siddharth';
-    this.girl = 'Khushi';
+    this.boy = DEFAULT_BOY;
+    this.girl = DEFAULT_GIRL;
     this.whisperList = [];
 
     this.reviveCount = 0;

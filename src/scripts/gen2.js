@@ -4,7 +4,7 @@
  */
 
 import { encryptNames, decryptNames } from './crypto.js';
-import { formatName } from './names.js';
+import { formatName, DEFAULT_BOY, DEFAULT_GIRL } from './names.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const boyInput = document.getElementById('gen2-boy');
@@ -85,8 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function triggerGenerate() {
-    const rawBoy = (boyInput.value || '').trim() || 'Siddharth';
-    const rawGirl = (girlInput.value || '').trim() || 'Khushi';
+    const rawBoy = (boyInput.value || '').trim() || DEFAULT_BOY;
+    const rawGirl = (girlInput.value || '').trim() || DEFAULT_GIRL;
 
     const boy = formatName(rawBoy);
     const girl = formatName(rawGirl);
